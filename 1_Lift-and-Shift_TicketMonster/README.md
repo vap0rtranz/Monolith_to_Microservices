@@ -8,7 +8,7 @@ In this lab you'll learn how to move a monolithic application to a cloud platfor
 
 1. Deploy a MySQL database service.
     ```
-    oc new-app --name=ticketmonster-db -e MYSQL_USER=ticket -e MYSQL_PASSWORD=monster -e MYSQL_DATABASE=ticketmonster mysql:5.5
+    oc new-app --name=ticketmonster-db -e MYSQL_USER=ticket -e MYSQL_PASSWORD=monster -e MYSQL_DATABASE=ticketmonster -e MYSQL_RANDOM_ROOT_PASSWORD=1 mysql:5.5
     ```
 
 1. Get the IP of the service.
