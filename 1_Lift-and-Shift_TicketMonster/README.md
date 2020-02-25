@@ -11,7 +11,7 @@ In this lab you'll learn how to move a monolithic application to a cloud platfor
     oc new-app --name=ticketmonster-db -e MYSQL_USER=ticket -e MYSQL_PASSWORD=monster -e MYSQL_DATABASE=ticketmonster -e MYSQL_RANDOM_ROOT_PASSWORD=1 mysql:5.5
     ```
 
-1. Get the IP of the service.
+2. Get the IP of the service.
     ```
     oc get svc
     ```
