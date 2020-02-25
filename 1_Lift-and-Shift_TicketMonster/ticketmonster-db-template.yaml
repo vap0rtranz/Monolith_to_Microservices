@@ -1,5 +1,5 @@
 kind: Template
-apiVersion: v1
+apiVersion: template.openshift.io/v1
 metadata:
   annotations:
     description: ticketmonster-db template
@@ -48,7 +48,7 @@ objects:
               - name: MYSQL_USER
                 value: ticket
             image: >-
-              mysql:5.5
+              mysql:5.7
             imagePullPolicy: IfNotPresent
             name: ticketmonster-db
             ports:
@@ -77,7 +77,7 @@ objects:
             - ticketmonster-db
           from:
             kind: ImageStreamTag
-            name: 'mysql:5.5'
+            name: 'mysql:5.7'
             namespace: openshift
         type: ImageChange
 - kind: Service
