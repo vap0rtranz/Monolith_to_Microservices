@@ -48,7 +48,7 @@ objects:
               - name: MYSQL_USER
                 value: ticket
             image: >-
-              mysql:5.5
+              mysql:5.7
             imagePullPolicy: IfNotPresent
             name: orders-db
             ports:
@@ -77,7 +77,7 @@ objects:
             - orders-db
           from:
             kind: ImageStreamTag
-            name: 'mysql:5.5'
+            name: 'mysql:5.7'
             namespace: openshift
         type: ImageChange
 - kind: Service
