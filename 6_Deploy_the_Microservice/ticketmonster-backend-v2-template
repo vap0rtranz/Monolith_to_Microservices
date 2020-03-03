@@ -1,12 +1,12 @@
 kind: Template
-apiVersion: v1
+apiVersion: template.openshift.io/v1
 metadata:
   annotations:
-    description: ticketmonster-orders-service template
+    description: ticketmonster-backend-v2 template
   labels:
-    app: ticketmonster-orders-service
-  name: ticketmonster-orders-service
-  template: ticketmonster-orders-service
+    app: ticketmonster-backend-v2
+  name: ticketmonster-backend-v2
+  template: ticketmonster-backend-v2
 objects:
 - kind: DeploymentConfig
   apiVersion: apps.openshift.io/v1
