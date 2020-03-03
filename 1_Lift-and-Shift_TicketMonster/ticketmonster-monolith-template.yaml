@@ -1,87 +1,72 @@
-kind: Template
-apiVersion: v1
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
 metadata:
   annotations:
-    description: ticketmonster-monolith template
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: "2020-02-25T16:26:06Z"
+  generation: 3
   labels:
     app: ticketmonster-monolith
   name: ticketmonster-monolith
-  template: ticketmonster-monolith
-objects:
-- kind: DeploymentConfig
-  apiVersion: apps.openshift.io/v1
-  metadata:
-    annotations:
-      openshift.io/generated-by: OpenShiftNewApp
-    generation: 2
-    labels:
-      app: ticketmonster-monolith
-    name: ticketmonster-monolith
-  spec:
-    replicas: 1
-    revisionHistoryLimit: 10
-    selector:
-      app: ticketmonster-monolith
-      deploymentconfig: ticketmonster-monolith
-    strategy:
-      activeDeadlineSeconds: 21600
-      resources: {}
-      rollingParams:
-        intervalSeconds: 1
-        maxSurge: 25%
-        maxUnavailable: 25%
-        timeoutSeconds: 600
-        updatePeriodSeconds: 1
-      type: Rolling
-    template:
-      metadata:
-        annotations:
-          openshift.io/generated-by: OpenShiftNewApp
-        creationTimestamp: null
-        labels:
-          app: ticketmonster-monolith
-          deploymentconfig: ticketmonster-monolith
-      spec:
-        containers:
-          - env:
-              - name: MYSQL_SERVICE_HOST
-                value: ticketmonster-db
-              - name: MYSQL_SERVICE_PORT
-                value: '3306'
-            image: >-
-              dynatraceacm/ticketmonster-monolith
-            imagePullPolicy: Always
-            name: ticketmonster-monolith
-            ports:
-              - containerPort: 8080
-                protocol: TCP
-            resources: {}
-            terminationMessagePath: /dev/termination-log
-            terminationMessagePolicy: File
-        dnsPolicy: ClusterFirst
-        restartPolicy: Always
-        schedulerName: default-scheduler
-        securityContext: {}
-        terminationGracePeriodSeconds: 30
-    test: false
-- kind: Service
-  apiVersion: v1
-  metadata:
-    annotations:
-    labels:
-      app: ticketmonster-monolith
-    name: ticketmonster-monolith
-  spec:
-    clusterIP: 
-    ports:
-      - name: 8080-tcp
-        port: 8080
-        protocol: TCP
-        targetPort: 8080
-    selector:
-      app: ticketmonster-monolith
-      deploymentconfig: ticketmonster-monolith
-    sessionAffinity: None
-    type: ClusterIP
-  status:
-    loadBalancer: {}
+  namespace: project-user4
+  resourceVersion: "937745"
+  selfLink: /apis/apps.openshift.io/v1/namespaces/project-user4/deploymentconfigs/ticketmonster-monolith
+  uid: 5008c658-08fd-415f-ae51-41b982650b2c
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: ticketmonster-monolith
+    deploymentconfig: ticketmonster-monolith
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        app: ticketmonster-monolith
+        deploymentconfig: ticketmonster-monolith
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_SERVICE_HOST
+          value: ticketmonster-db
+        - name: MYSQL_SERVICE_PORT
+          value: "3306"
+        image: dynatraceacm/ticketmonster-monolith@sha256:6df284475fabefddafddc26ca273374fddc1b5be261d9c9622475626b0ea0165
+        imagePullPolicy: Always
+        name: ticketmonster-monolith
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - ticketmonster-monolith
+      from:
+        kind: ImageStreamTag
+        name: ticketmonster-monolith:latest
+        namespace: project-user4
+      lastTriggeredImage: dynatraceacm/ticketmonster-monolith@sha256:6df284475fabefddafddc26ca273374fddc1b5be261d9c9622475626b0ea0165
+    type: ImageChange

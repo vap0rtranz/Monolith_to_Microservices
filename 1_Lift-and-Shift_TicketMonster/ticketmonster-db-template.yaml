@@ -1,103 +1,82 @@
-kind: Template
-apiVersion: v1
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
 metadata:
   annotations:
-    description: ticketmonster-db template
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: "2020-02-25T16:23:29Z"
+  generation: 4
   labels:
     app: ticketmonster-db
   name: ticketmonster-db
-  template: ticketmonster-db
-objects:
-- kind: DeploymentConfig
-  apiVersion: apps.openshift.io/v1
-  metadata:
-    annotations:
-    labels:
-      app: ticketmonster-db
-    name: ticketmonster-db
-  spec:
-    replicas: 1
-    revisionHistoryLimit: 10
-    selector:
-      app: ticketmonster-db
-      deploymentconfig: ticketmonster-db
-    strategy:
-      activeDeadlineSeconds: 21600
-      resources: {}
-      rollingParams:
-        intervalSeconds: 1
-        maxSurge: 25%
-        maxUnavailable: 25%
-        timeoutSeconds: 600
-        updatePeriodSeconds: 1
-      type: Rolling
-    template:
-      metadata:
-        annotations:
-        creationTimestamp: null
-        labels:
-          app: ticketmonster-db
-          deploymentconfig: ticketmonster-db
-      spec:
-        containers:
-          - env:
-              - name: MYSQL_DATABASE
-                value: ticketmonster
-              - name: MYSQL_PASSWORD
-                value: monster
-              - name: MYSQL_USER
-                value: ticket
-            image: >-
-              mysql:5.5
-            imagePullPolicy: IfNotPresent
-            name: ticketmonster-db
-            ports:
-              - containerPort: 3306
-                protocol: TCP
-            resources: {}
-            terminationMessagePath: /dev/termination-log
-            terminationMessagePolicy: File
-            volumeMounts:
-              - mountPath: /var/lib/mysql/data
-                name: ticketmonster-db-volume-1
-        dnsPolicy: ClusterFirst
-        restartPolicy: Always
-        schedulerName: default-scheduler
-        securityContext: {}
-        terminationGracePeriodSeconds: 30
-        volumes:
-          - emptyDir: {}
-            name: ticketmonster-db-volume-1
-    test: false
-    triggers:
-      - type: ConfigChange
-      - imageChangeParams:
-          automatic: true
-          containerNames:
-            - ticketmonster-db
-          from:
-            kind: ImageStreamTag
-            name: 'mysql:5.5'
-            namespace: openshift
-        type: ImageChange
-- kind: Service
-  apiVersion: v1
-  metadata:
-    name: ticketmonster-db
-    labels:
-      app: ticketmonster-db
-    annotations:
-      openshift.io/generated-by: OpenShiftNewApp
-  spec:
-    ports:
-      - name: 3306-tcp
-        protocol: TCP
-        port: 3306
-        targetPort: 3306
-    selector:
-      app: ticketmonster-db
-      deploymentconfig: ticketmonster-db
-    type: ClusterIP
-    sessionAffinity: None
-  status:
-    loadBalancer: {}
+  namespace: project-user4
+  resourceVersion: "937337"
+  selfLink: /apis/apps.openshift.io/v1/namespaces/project-user4/deploymentconfigs/ticketmonster-db
+  uid: 23040959-7410-467a-8bd6-0fb35bd29616
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: ticketmonster-db
+    deploymentconfig: ticketmonster-db
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        app: ticketmonster-db
+        deploymentconfig: ticketmonster-db
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          value: ticketmonster
+        - name: MYSQL_PASSWORD
+          value: monster
+        - name: MYSQL_USER
+          value: ticket
+        - name: MYSQL_RANDOM_ROOT_PASSWORD
+          value: "1"
+        image: mysql@sha256:c9c671d0c959183154313d6830d46f9a00d5937f97415c15ebd3c6844f6f1467
+        imagePullPolicy: IfNotPresent
+        name: ticketmonster-db
+        ports:
+        - containerPort: 3306
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: ticketmonster-db-volume-1
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir: {}
+        name: ticketmonster-db-volume-1
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - ticketmonster-db
+      from:
+        kind: ImageStreamTag
+        name: ticketmonster-db:5.5
+        namespace: project-user4
+      lastTriggeredImage: mysql@sha256:c9c671d0c959183154313d6830d46f9a00d5937f97415c15ebd3c6844f6f1467
+    type: ImageChange

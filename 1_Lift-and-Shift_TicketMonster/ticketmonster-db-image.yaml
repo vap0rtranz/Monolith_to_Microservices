@@ -1,0 +1,29 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+    openshift.io/image.dockerRepositoryCheck: "2020-02-25T16:23:29Z"
+  creationTimestamp: "2020-02-25T16:23:29Z"
+  generation: 2
+  labels:
+    app: ticketmonster-db
+  name: ticketmonster-db
+  namespace: project-user5
+  resourceVersion: "931892"
+  selfLink: /apis/image.openshift.io/v1/namespaces/project-user5/imagestreams/ticketmonster-db
+  uid: 022f809f-9ad5-4f31-94ca-759ca781a855
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+  - annotations:
+      openshift.io/imported-from: mysql:5.5
+    from:
+      kind: DockerImage
+      name: mysql:5.5
+    generation: 2
+    importPolicy: {}
+    name: "5.5"
+    referencePolicy:
+      type: Source
